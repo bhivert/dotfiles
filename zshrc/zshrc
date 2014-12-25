@@ -1,0 +1,32 @@
+
+source $HOME/.zshrc_bindkey
+source $HOME/.zshrc_aliases
+
+## HISTORY CONFIG
+HISTFILE=~/.zshrc_history
+SAVEHIST=500
+HISTSIZE=25
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt share_history
+
+## AUTO COMPLETION
+autoload -U compinit && compinit
+setopt menu_complete
+setopt completealiases
+
+zstyle ':completion:*' completer _complete _expand _expand_alias
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select=2
+
+## ENV
+export USER=`/usr/bin/whoami`
+export GROUP=`/usr/bin/id -gn $user`
+export MAIL="$USER@student.42.fr"
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:$HOME/.brew/bin:$HOME/bin
+
+## PROMPT
+autoload colors; colors
+PROMPT="%B%{$fg[cyan]%}[%{$fg[blue]%}%n@%M%{$fg[cyan]%}][%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
+RPROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}%D{%a %e, %b %G - %R}%{$fg[cyan]%}]%b%{$reset_color%}"
+

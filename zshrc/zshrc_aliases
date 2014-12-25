@@ -1,0 +1,9 @@
+## ALIASES
+
+alias h='history'
+
+alias l='ls -pG'
+alias ll='ls -hlpG'
+alias la='ls -hlapG'
+
+alias gcc='gcc -Wall -Wextra'
