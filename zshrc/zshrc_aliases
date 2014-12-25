@@ -2,9 +2,9 @@
 ## ALIASES
 
 alias h='history'
-
-alias l='ls -pG'
-alias ll='ls -hlpG'
-alias la='ls -hlapG'
+alias ls='ls --color'
+alias l='ls -p'
+alias ll='ls -hlp'
+alias la='ls -hlap'
 
 alias gcc='gcc -Wall -Wextra'
