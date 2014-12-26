@@ -41,11 +41,19 @@ zstyle ':completion:*' cache-path ~/.zsh_cache
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*:default' list-colors '${(s.:.)LSCOLORS}'
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
 
 autoload -U compinit && compinit
 
 ## PROMPT
 autoload colors; colors
-PROMPT="%B%{$fg[cyan]%}[%{$fg[blue]%}%n@%M%{$fg[cyan]%}][%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
+if [[ -z $SSH_CLIENT ]]; then
+	PROMPT="%B%{$fg[cyan]%}["
+else
+	PROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}ssh:"
+fi
+PROMPT+="%{$fg[blue]%}%n@%M%{$fg[cyan]%}]["
+PROMPT+="%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
 RPROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}%D{%a %e, %b %G - %R}%{$fg[cyan]%}]%b%{$reset_color%}"
 
