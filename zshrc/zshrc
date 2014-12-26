@@ -1,4 +1,11 @@
 
+## ENV
+export USER=`/usr/bin/whoami`
+export GROUP=`/usr/bin/id -gn $user`
+export MAIL="$USER@student.42.fr"
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:$HOME/.brew/bin:$HOME/bin
+export LSCOLORS="GxfxcxdxBxexdxbxbxgxgx"
+
 if [ -f $HOME/.zshrc_bindkey ]; then
 	. $HOME/.zshrc_bindkey
 fi
@@ -20,6 +27,7 @@ setopt share_history
 
 ## AUTO COMPLETION
 
+zmodload 'zsh/complist'
 setopt hist_verify
 setopt auto_remove_slash
 setopt chase_links
@@ -32,14 +40,9 @@ zstyle ':completion:*' cache-path ~/.zsh_cache
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=2
+zstyle ':completion:*:default' list-colors '${(s.:.)LSCOLORS}'
 
 autoload -U compinit && compinit
-
-## ENV
-export USER=`/usr/bin/whoami`
-export GROUP=`/usr/bin/id -gn $user`
-export MAIL="$USER@student.42.fr"
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:$HOME/.brew/bin:$HOME/bin
 
 ## PROMPT
 autoload colors; colors
