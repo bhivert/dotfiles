@@ -22,6 +22,7 @@ setopt append_history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt hist_expire_dups_first
+setopt hist_reduce_blanks
 setopt hist_find_no_dups
 setopt share_history
 
@@ -41,19 +42,24 @@ zstyle ':completion:*' cache-path ~/.zsh_cache
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*:default' list-colors '${(s.:.)LSCOLORS}'
-zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*:manuals.(^1*)' insert-sections true
+#zstyle ':completion:*:manuals' separate-sections true
+#zstyle ':completion:*:manuals.(^1*)' insert-sections true
 
 autoload -U compinit && compinit
 
 ## PROMPT
+
 autoload colors; colors
-if [[ -z $SSH_CLIENT ]]; then
-	PROMPT="%B%{$fg[cyan]%}["
-else
-	PROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}ssh:"
+
+#autoload -Uz vcs_info
+#setopt prompt_subst
+
+PROMPT="%B%{$fg[cyan]%}["
+if [[ -n $SSH_CLIENT ]]; then
+	PROMPT+="%{$fg[red]%}ssh:"
 fi
 PROMPT+="%{$fg[blue]%}%n@%M%{$fg[cyan]%}]["
-PROMPT+="%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
-RPROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}%D{%a %e, %b %G - %R}%{$fg[cyan]%}]%b%{$reset_color%}"
 
+PROMPT+="%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
+
+RPROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}%D{%a %e, %b %G - %R}%{$fg[cyan]%}]%b%{$reset_color%}"

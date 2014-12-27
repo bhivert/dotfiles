@@ -2,8 +2,13 @@
 ## ALIASES
 
 alias h='history'
-#alias ls='ls --color'
-alias ls='ls -G'
+
+if [[ $OSTYPE == "linux-gnu" ]]; then
+	alias ls='ls --color'
+elif [[ $OSTYPE == "darwin"  || $OSTYPE == "freebsd" ]]; then
+	alias ls='ls -G'
+fi
+
 alias l='ls -p'
 alias ll='ls -hlp'
 alias la='ls -hlap'
@@ -34,4 +39,4 @@ alias gckb='git checkout -b'
 ## alias gta='git tag -a -m'
 ## alias gf='git reflog'
 alias gv='git log --pretty=format:'%s' | cut -d " " -f 1 | sort | uniq -c | sort -nr'
- alias gu="git shortlog | grep -E '^[^ ]'"
+alias gu="git shortlog | grep -E '^[^ ]'"
