@@ -19,6 +19,7 @@ alias rm='rm -i'
 
 alias gcc='gcc -Wall -Wextra'
 
+alias g='git'
 alias gc='git clone'
 alias ga='git add'
 alias gco='git commit -m'
