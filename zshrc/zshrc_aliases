@@ -27,6 +27,7 @@ alias gp='git push'
 alias gpl='git pull'
 #alias glog='git log'
 alias gl="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gls='git ls-files'
 alias gs='git status'
 #alias gd='git diff'
 #alias gm='git merge'
