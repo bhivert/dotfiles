@@ -59,7 +59,6 @@ if [[ -n $SSH_CLIENT ]]; then
 	PROMPT+="%{$fg[red]%}ssh:"
 fi
 PROMPT+="%{$fg[blue]%}%n@%M%{$fg[cyan]%}]["
-
 PROMPT+="%{$fg[yellow]%}%1~%{$fg[cyan]%}] %b%{$reset_color%}"
 
 RPROMPT="%B%{$fg[cyan]%}[%{$fg[red]%}%D{%a %e, %b %G - %R}%{$fg[cyan]%}]%b%{$reset_color%}"
