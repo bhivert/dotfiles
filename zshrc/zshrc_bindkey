@@ -7,6 +7,8 @@ bindkey "\e[4~" end-of-line
 bindkey "\e[F"  end-of-line
 bindkey '[3~' delete-char
 bindkey '[2~' overwrite-mode
+bindkey "\e[1;2C" forward-word
+bindkey "\e[1;2D" backward-word
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 

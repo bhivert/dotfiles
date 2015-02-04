@@ -5,7 +5,7 @@ alias h='history'
 
 if [[ $OSTYPE == "linux-gnu" ]]; then
 	alias ls='ls --color'
-elif [[ $OSTYPE == "darwin"  || $OSTYPE == "freebsd" ]]; then
+elif [[ $OSTYPE == "darwin13.0"  || $OSTYPE == "freebsd" ]]; then
 	alias ls='ls -G'
 fi
 
