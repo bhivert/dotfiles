@@ -9,9 +9,9 @@ syntax on				" Syntax coloration
 " == Cursor ==
 set mouse=a				" Enable mouse support
 set cursorline			" Show cursorline
-"set nowrap				" Don't wrap text on multiple lines
+set nowrap				" Don't wrap text on multiple lines
 set scrolloff=7			" Display minimum X lines around the cursor
-"set sidescrolloff=40		" Display minimum X columns around the cursor
+set sidescrolloff=10		" Display minimum X columns around the cursor
 
 " == Indentation ==
 set noexpandtab			" Disable tab to spaces
@@ -44,58 +44,48 @@ highlight LineNr ctermbg=234 ctermfg=239
 filetype off							" Required for vundle
 set rtp+=~/.vim/bundle/Vundle.vim	" Vundle setup
 call vundle#begin()						" Vundle setup
-Bundle 'gmarik/vundle'
-"Bundle 'Syntastic'
+Bundle 'gmarik/vundle.vim'
+Bundle 'Syntastic'
 Bundle 'ctrlp.vim'
-"Bundle 'fugitive.vim'
 Bundle 'Lokaltog/vim-powerline'
-"Bundle 'taglist-plus'
 Bundle 'AutoComplPop'
-"Bundle 'neocomplcache'
-"Bundle 'scrooloose/nerdtree'
 call vundle#end()						" Vundle setup
 filetype plugin indent on				" Required for vundle
 
 " Clang Complete Settings
 let g:clang_auto_select = 1
 let g:clang_complete_auto = 1
-let g:clang_hl_errors =1
-let g:clang_user_options=' -I include -Wall -Wextra -Werror || exit 0'
-let g:clang_snippets=1
-let g:clang_snippets_engine='clang_complete'
-let g:clang_use_library=1
-let g:clang_library_path = '/Library/Developer/CommandLineTools/usr/lib/'
-"let g:clang_hl_errors=1
-" if there's an error, allow us to see it
-"let g:clang_complete_copen=1
-"let g:clang_complete_macros=1
-"let g:clang_complete_patterns=1
-" Limit memory use
-"let g:clang_memory_percent=70
-" Compil flags
-"let g:clang_user_options=' -I include -Wall -Wextra -Werror || exit 0'
-" Set this to 0 if you don't want autoselect, 1 if you want autohighlight,
-" and 2 if you want autoselect. 0 will make you arrow down to select the first
-" option, 1 will select the first option for you, but won't insert it unless you
-" press enter. 2 will automatically insert what it thinks is right. 1 is the most
-" convenient IMO, and it defaults to 0.
-"let g:clang_auto_select=1
-"let g:clang_snippets=1
-"let g:clang_conceal_snippets=1
+let g:clang_hl_errors = 1
+let g:clang_user_options = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra -std=c++11 -stdlib=libc++ || exit 0'
+let g:clang_use_library = 1
+let g:clang_library_path = '/usr/lib'
 
-"set conceallevel=2
-"set concealcursor=vin
-" The single one that works with clang_complete
-"let g:clang_snippets_engine='clang_complete'
-"set completeopt=menu,longest
-"let g:clang_library_path = '/usr/lib/x86_64-linux-gnu/libclang.so.1'
+let g:clang_snippets_engine = 'clang_complete'
+let g:clang_snippets = 1
+let g:clang_conceal_snippets = 1
+
+let g:clang_hl_errors = 1
+
+"let g:clang_complete_copen=1
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=1
+
+let g:clang_memory_percent = 70
+set conceallevel=2
+set concealcursor=vin
+set completeopt=menu,longest
+
+map <c-a> :call g:ClangUpdateQuickFix()<CR>
 
 " == Syntastic customizations ==
-" let g:syntastic_c_check_header = 1
-" let g:syntastic_c_auto_refresh_includes = 1
-" let b:syntastic_c_cflags = '-I./includes'
-" let g:syntastic_c_include_dirs = [ 'headers', 'includes', 'libft/includes' ]
-" let g:syntastic_disabled_filetypes=['o', 'a']
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_compiler = 'clang'
+let b:syntastic_c_cflags = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra'
+let g:syntastic_c_include_dirs = [ 'includes', '../includes' ]
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra -std=c++11 -stdlib=libc++'
+let g:syntastic_disabled_filetypes = ['o', 'a']
 
 " == Lokaltog customisation ==
 set laststatus=2					" Always show status line
