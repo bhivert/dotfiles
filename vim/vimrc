@@ -56,7 +56,7 @@ filetype plugin indent on				" Required for vundle
 let g:clang_auto_select = 1
 let g:clang_complete_auto = 1
 let g:clang_hl_errors = 1
-let g:clang_user_options = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra -std=c++11 -stdlib=libc++ || exit 0'
+let g:clang_user_options = '-I includes -I srcs -I srcs/* -I * -Wall -Wextra -std=c++11 || exit 0'
 let g:clang_use_library = 1
 let g:clang_library_path = '/usr/lib'
 
@@ -81,10 +81,14 @@ map <c-a> :call g:ClangUpdateQuickFix()<CR>
 let g:syntastic_c_check_header = 1
 let g:syntastic_c_auto_refresh_includes = 1
 let g:syntastic_c_compiler = 'clang'
-let b:syntastic_c_cflags = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra'
-let g:syntastic_c_include_dirs = [ 'includes', '../includes' ]
+let b:syntastic_c_cflags = '-Wall -Wextra'
+"let g:syntastic_c_include_dirs = ['']
+
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
 let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-I includes -I * -I srcs -I srcs/* -Wall -Wextra -std=c++11 -stdlib=libc++'
+let g:syntastic_cpp_compiler_options = '-Wall -Wextra -std=c++11'
+"let g:syntastic_cpp_include_dirs = ['']
 let g:syntastic_disabled_filetypes = ['o', 'a']
 
 " == Lokaltog customisation ==
