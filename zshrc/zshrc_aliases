@@ -4,9 +4,9 @@
 alias h='history'
 
 OS=`uname`
-if [[ $OS == "linux-gnu" ]]; then
+if [[ $OS == "Linux" ]]; then
 	alias ls='ls --color'
-elif [[	$OS == "Darwin"  || $OS == "freebsd" ]]; then
+elif [[	$OS == "Darwin"  || $OS == "FreeBSD" ]]; then
 	alias ls='ls -G'
 fi
 
