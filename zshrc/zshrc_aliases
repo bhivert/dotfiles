@@ -3,9 +3,10 @@
 
 alias h='history'
 
-if [[ $OSTYPE == "linux-gnu" ]]; then
+OS=`uname`
+if [[ $OS == "linux-gnu" ]]; then
 	alias ls='ls --color'
-elif [[ $OSTYPE == "darwin13.0"  || $OSTYPE == "freebsd" ]]; then
+elif [[	$OS == "Darwin"  || $OS == "freebsd" ]]; then
 	alias ls='ls -G'
 fi
 
