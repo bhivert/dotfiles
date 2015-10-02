@@ -6,7 +6,7 @@
 ;    By: bhivert <bhivert@student.42.fr>            +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2015/10/01 21:35:31 by bhivert           #+#    #+#              ;
-;    Updated: 2015/10/02 22:12:57 by bhivert          ###   ########.fr        ;
+;    Updated: 2015/10/03 00:26:20 by bhivert          ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
@@ -67,7 +67,7 @@
 ; Custom variables SET
 (custom-set-variables
  '(ac-clang-flags (quote ("-Wextra -Wall"))) 
- '(flycheck-clang-include-path (quote ("includes" "lib*/includes")))
+ '(flycheck-clang-include-path (quote ("../includes" "../../includes" "../includes/sdl" "../../includes/sdl" )))
  '(gud-gdb-command-name "gdb --annotate=1")
  '(large-file-warning-threshold nil)
  )
@@ -97,9 +97,12 @@
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
   (add-to-list 'ahead:include-directories '".")
-  (add-to-list 'ahead:include-directories '"includes")
+  (add-to-list 'ahead:include-directories '"../includes")
+  (add-to-list 'ahead:include-directories '"../../includes")
+  (add-to-list 'ahead:include-directories '"/usr/include")
   (add-to-list 'ahead:include-directories '"/usr/local/include")
-  (add-to-list 'ahead:include-directories '"${HOME}/.brew/include/SDL2")
+  (add-to-list 'ahead:include-directories '"../include/sdl")
+  (add-to-list 'ahead:include-directories '"../../include/sdl")
   )
 (add-hook 'c++-mode-hook 'init:ac-c-headers)
 (add-hook 'c-mode-hook 'init:ac-c-headers)
