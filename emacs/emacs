@@ -1,0 +1,107 @@
+;******************************************************************************;
+;                                                                              ;
+;                                                         :::      ::::::::    ;
+;    .myemacs                                           :+:      :+:    :+:    ;
+;                                                     +:+ +:+         +:+      ;
+;    By: bhivert <bhivert@student.42.fr>            +#+  +:+       +#+         ;
+;                                                 +#+#+#+#+#+   +#+            ;
+;    Created: 2015/10/01 21:35:31 by bhivert           #+#    #+#              ;
+;    Updated: 2015/10/02 22:12:57 by bhivert          ###   ########.fr        ;
+;                                                                              ;
+;******************************************************************************;
+
+; Load general features files
+;; (setq header "~/.emacs.d/header42")
+;; (setq load-path (append (list nil header) load-path))
+;; (load "list.el")
+;; (load "string.el")
+;; (load "comments.el")
+;; (load "header.el")
+
+; Set default emacs configuration
+(set-language-environment "UTF-8")
+(setq-default font-lock-global-modes t)
+(setq-default line-number-mode nil)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t)
+(global-set-key (kbd "DEL") 'backward-delete-char)
+(setq-default c-backspace-function 'backward-delete-char)
+(setq-default c-basic-offset 4)
+(setq-default c-default-style "linux")
+(setq-default tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
+								64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+
+; Set Brakets match
+(load-library "paren")
+(show-paren-mode 1)
+
+; Key Biding
+(global-set-key (kbd "C-c C-h") 'header-insert)
+(global-set-key (kbd "C-c C-c") 'comment-region)
+(global-set-key (kbd "C-c C-u") 'uncomment-region)
+;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+; Meta Key Biding Mac
+
+; Enable mouse support MacOS
+(unless window-system
+ (require 'mouse)
+ (xterm-mouse-mode t)
+ (global-set-key [mouse-4] '(lambda ()
+							   (interactive)
+							   (scroll-down 1)))
+ (global-set-key [mouse-5] '(lambda ()
+							   (interactive)
+							   (scroll-up 1)))
+ (defun track-mouse (e))
+ (setq mouse-sel-mode t)
+ )
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
+
+; Custom variables SET
+(custom-set-variables
+ '(ac-clang-flags (quote ("-Wextra -Wall"))) 
+ '(flycheck-clang-include-path (quote ("includes" "lib*/includes")))
+ '(gud-gdb-command-name "gdb --annotate=1")
+ '(large-file-warning-threshold nil)
+ )
+(custom-set-faces)
+
+; Enable && Setup yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
+
+; Enable flycheck (on the fly syntax checker)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+; Enable && Setup auto-complete
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+; Enable && Setup auto-complete-clang
+(require 'auto-complete-clang)
+(defun init:ac-mode ()
+  (add-to-list 'ac-sources 'ac-source-clang)
+  )
+(add-hook 'c-mode-common-hook 'init:ac-mode)
+
+; Enable && Setup auto-complete-c-headers
+(defun init:ac-c-headers()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'ahead:include-directories '".")
+  (add-to-list 'ahead:include-directories '"includes")
+  (add-to-list 'ahead:include-directories '"/usr/local/include")
+  (add-to-list 'ahead:include-directories '"${HOME}/.brew/include/SDL2")
+  )
+(add-hook 'c++-mode-hook 'init:ac-c-headers)
+(add-hook 'c-mode-hook 'init:ac-c-headers)
+
+;*******************************************************************************;

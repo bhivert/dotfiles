@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: union
+# key: union
+# --
+typedef union	u_${1:name}
+{
+        $0
+}				t_${2:name};
