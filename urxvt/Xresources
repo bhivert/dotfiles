@@ -1,0 +1,9 @@
+
+ft*dpi: 96
+Xft*antialias: true
+Xft*rgba: rgb
+Xft*hinting: true
+Xft*hintstyle: hintslight
+
+#include ".Xresource/urxvt.rc"
+#include ".Xresource/urxvt_color.rc"

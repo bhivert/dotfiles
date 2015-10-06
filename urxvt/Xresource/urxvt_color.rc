@@ -1,0 +1,36 @@
+!			color for URxvt
+! infos:
+! URxvt* == all urxvt terminal instance (default color)
+! urxvt* == instance named urxvt (default named instance)
+! other* == instance named other ("other" named instance)
+!
+! 			Normal
+URxvt*cursorColor: 	#d2e5f8
+URxvt.cursorBlink:	false
+! color Basic + Light
+URxvt*background: 	#060606
+URxvt*foreground: 	#a8a8a8
+! color0	black
+URxvt*color0: 	#0f0f0f
+URxvt*color8:	#4a4a4a
+! color1	red
+URxvt*color1:	#bf2220
+URxvt*color9:	#ff594c
+! color2	green
+URxvt*color2:	#83a85d
+URxvt*color10:	#91c45d
+! color3	yellow
+URxvt*color3:	#ed9f4b
+URxvt*color11:	#fbdf7f
+! color4	blue
+URxvt*color4:	#395966
+URxvt*color12:	#6094aa
+! color5	magenta
+URxvt*color5:	#524261
+URxvt*color13:	#c19de5
+! color6	cyan
+URxvt*color6:	#00826b
+URxvt*color14:	#00bb9a
+! color7	white
+URxvt*color7:	#a8a8a8
+URxvt*color15:	#e0e0e0
