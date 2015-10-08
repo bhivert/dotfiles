@@ -2,12 +2,13 @@
 set nocompatible		" Disable vi compatibility
 set title				" Display filename in title bar
 set number				" Show line number
+set relativenumber		" Show line number
 set ruler				" Show cursor position
 set showcmd				" Show incomplete command
 syntax on				" Syntax coloration
 
 " == Cursor ==
-set mouse=a				" Enable mouse support
+"set mouse=a				" Enable mouse support
 set cursorline			" Show cursorline
 set nowrap				" Don't wrap text on multiple lines
 set scrolloff=7			" Display minimum X lines around the cursor
@@ -32,10 +33,15 @@ set smartcase			" Don't ignore case when capitale is typed
 set incsearch			" Highlight typed word during typing
 set hlsearch			" Highlight typed word
 
+" == ==
+set lazyredraw			" no reddraw cursorline
+set ttyfast				" fast terminal
+
 " == Theme ==
 set t_Co=256
 "colorscheme desert		" Enable desert theme
-colorscheme mustang		" Enable mustang theme
+"colorscheme mustang		" Enable mustang theme
+colorscheme sos		" Enable mustang theme
 "highlight Normal ctermfg=white
 highlight LineNr ctermbg=234 ctermfg=239
 "highlight CursorLine term=underline cterm=None ctermbg=234
@@ -48,34 +54,34 @@ Bundle 'gmarik/vundle.vim'
 Bundle 'Syntastic'
 Bundle 'ctrlp.vim'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'AutoComplPop'
+"Bundle 'AutoComplPop'
 call vundle#end()						" Vundle setup
 filetype plugin indent on				" Required for vundle
 
 " Clang Complete Settings
-let g:clang_auto_select = 1
-let g:clang_complete_auto = 1
-let g:clang_hl_errors = 1
-let g:clang_user_options = '-I includes -I srcs -I srcs/* -I * -Wall -Wextra -std=c++11 || exit 0'
-let g:clang_use_library = 1
-let g:clang_library_path = '/usr/lib'
-
-let g:clang_snippets_engine = 'clang_complete'
-let g:clang_snippets = 1
-let g:clang_conceal_snippets = 1
-
-let g:clang_hl_errors = 1
-
-"let g:clang_complete_copen=1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=1
-
-let g:clang_memory_percent = 70
-set conceallevel=2
-set concealcursor=vin
-set completeopt=menu,longest
-
-map <c-a> :call g:ClangUpdateQuickFix()<CR>
+"let g:clang_auto_select = 1
+"let g:clang_complete_auto = 1
+"let g:clang_hl_errors = 1
+"let g:clang_user_options = '-I includes -I srcs -I srcs/* -I * -Wall -Wextra -std=c++11 || exit 0'
+"let g:clang_use_library = 1
+"let g:clang_library_path = '/usr/lib'
+"
+"let g:clang_snippets_engine = 'clang_complete'
+"let g:clang_snippets = 1
+"let g:clang_conceal_snippets = 1
+"
+"let g:clang_hl_errors = 1
+"
+""let g:clang_complete_copen=1
+"let g:clang_complete_macros=1
+"let g:clang_complete_patterns=1
+"
+"let g:clang_memory_percent = 70
+"set conceallevel=2
+"set concealcursor=vin
+"set completeopt=menu,longest
+"
+"map <c-a> :call g:ClangUpdateQuickFix()<CR>
 
 " == Syntastic customizations ==
 let g:syntastic_c_check_header = 1
@@ -106,12 +112,19 @@ endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 autocmd BufNewFile *.{h,hpp} :3
 
+autocmd FileType man set tabstop=8
+runtime ftplugin/man.vim
+
 " == Mapping ==
 nmap <c-x> :w<cr>
 nmap <c-c> :q<cr>
 nmap <c-e> :Exp<cr>
+nmap <silent> <C-left> <C-w><left>
+nmap <silent> <C-right> <C-w><right>
+nmap <silent> <C-up> <C-w><up>
+nmap <silent> <C-down> <C-w><down>
 nmap <c-b> :CtrlPBuffer<cr>
-"map <C-n> :NERDTreeToggle<CR>
+nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
 
 let mapleader="\\"
 nmap <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
