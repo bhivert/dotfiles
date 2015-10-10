@@ -1,3 +1,4 @@
+
 " == Common settings ==
 set nocompatible		" Disable vi compatibility
 set title				" Display filename in title bar
@@ -39,11 +40,12 @@ set ttyfast				" fast terminal
 
 " == Theme ==
 set t_Co=256
-"colorscheme desert		" Enable desert theme
+colorscheme desert		" Enable desert theme
 "colorscheme mustang		" Enable mustang theme
-colorscheme sos		" Enable mustang theme
+"colorscheme sos		" Enable mustang theme
 "highlight Normal ctermfg=white
 highlight LineNr ctermbg=234 ctermfg=239
+highlight CursorLineNr ctermfg=yellow ctermbg=none
 "highlight CursorLine term=underline cterm=None ctermbg=234
 
 " == Vundle (PLUGINS MANAGER) ==
@@ -57,6 +59,73 @@ Bundle 'Lokaltog/vim-powerline'
 "Bundle 'AutoComplPop'
 call vundle#end()						" Vundle setup
 filetype plugin indent on				" Required for vundle
+
+" == Syntastic customizations ==
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_compiler = 'clang'
+let b:syntastic_c_cflags = '-Wall -Wextra'
+"let g:syntastic_c_include_dirs = ['']
+
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-Wall -Wextra -std=c++11'
+"let g:syntastic_cpp_include_dirs = ['']
+let g:syntastic_disabled_filetypes = ['o', 'a']
+
+" == Lokaltog customisation ==
+set laststatus=2					" Always show status line
+
+autocmd FileType man set tabstop=8
+runtime ftplugin/man.vim
+
+" == Mapping ==
+nmap <c-x> :w<cr>
+nmap <c-c> :q<cr>
+nmap <c-e> :Exp<cr>
+nmap <silent> <C-t> :tabe.<cr>
+nmap <silent> <C-n> :tabnext<cr>
+nmap <silent> <C-p> :tabprevious<cr>
+nmap <silent> <C-h> <C-w>h
+nmap <silent> <C-l> <C-w>l
+nmap <silent> <C-k> <C-w>k
+nmap <silent> <C-j> <C-w>j
+nmap <c-b> :CtrlPBuffer<cr>
+nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
+
+let mapleader="\\"
+nmap <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
+nmap <silent> <leader>sv :source $HOME/.vimrc<CR>		" Source vimrc
+"nmap <silent> <leader>ev :edit $HOME/.myvimrc<CR>		" Edit myvimrc
+"nmap <silent> <leader>sv :source $HOME/.myvimrc<CR>	" Source myvimrc
+
+" == Misc ==
+set showmatch			" Show matching bracket
+set matchtime=10		" Show matching bracket for 1 second
+
+" == Norme C 42==
+set colorcolumn=80
+
+highlight normec42 ctermbg=red ctermfg=white guibg=#592929
+autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '^ ')				"espace au debut
+autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '  \+')				"double espace
+autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', ' \t')				"espace suivit de tab
+autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '\t ')				"tab suivit d'espace
+autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '[ \t]\+$')			"tab ou espace a la fin
+"autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '\%>80v.\+')		"plus de 80 caracteres
+
+" == Auto .h protect ==
+function! s:insert_gates()
+let getname = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+	execute "normal! i#ifndef " . getname
+	execute "normal! o# define " . getname
+	execute "normal! o"
+	execute "normal! Go#endif"
+	normal! kk
+endfunction
+autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+autocmd BufNewFile *.{h,hpp} :3
 
 " Clang Complete Settings
 "let g:clang_auto_select = 1
@@ -82,72 +151,6 @@ filetype plugin indent on				" Required for vundle
 "set completeopt=menu,longest
 "
 "map <c-a> :call g:ClangUpdateQuickFix()<CR>
-
-" == Syntastic customizations ==
-let g:syntastic_c_check_header = 1
-let g:syntastic_c_auto_refresh_includes = 1
-let g:syntastic_c_compiler = 'clang'
-let b:syntastic_c_cflags = '-Wall -Wextra'
-"let g:syntastic_c_include_dirs = ['']
-
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_auto_refresh_includes = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-Wall -Wextra -std=c++11'
-"let g:syntastic_cpp_include_dirs = ['']
-let g:syntastic_disabled_filetypes = ['o', 'a']
-
-" == Lokaltog customisation ==
-set laststatus=2					" Always show status line
-
-" == Auto .h protect ==
-function! s:insert_gates()
-let getname = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-	execute "normal! i#ifndef " . getname
-	execute "normal! o# define " . getname
-	execute "normal! o"
-	execute "normal! Go#endif"
-	normal! kk
-endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
-autocmd BufNewFile *.{h,hpp} :3
-
-autocmd FileType man set tabstop=8
-runtime ftplugin/man.vim
-
-" == Mapping ==
-nmap <c-x> :w<cr>
-nmap <c-c> :q<cr>
-nmap <c-e> :Exp<cr>
-nmap <silent> <C-left> <C-w><left>
-nmap <silent> <C-right> <C-w><right>
-nmap <silent> <C-up> <C-w><up>
-nmap <silent> <C-down> <C-w><down>
-nmap <c-b> :CtrlPBuffer<cr>
-nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
-
-let mapleader="\\"
-nmap <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
-nmap <silent> <leader>sv :source $HOME/.vimrc<CR>		" Source vimrc
-"nmap <silent> <leader>ev :edit $HOME/.myvimrc<CR>		" Edit myvimrc
-"nmap <silent> <leader>sv :source $HOME/.myvimrc<CR>	" Source myvimrc
-
-
-" == Misc ==
-set showmatch			" Show matching bracket
-set matchtime=10		" Show matching bracket for 1 second
-
-" == Norme C 42==
-
-set colorcolumn=80
-
-highlight normec42 ctermbg=red ctermfg=white guibg=#592929
-autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '^ ')				"espace au debut
-autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '  \+')				"double espace
-autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', ' \t')				"espace suivit de tab
-autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '\t ')				"tab suivit d'espace
-autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '[ \t]\+$')			"tab ou espace a la fin
-"autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '\%>80v.\+')		"plus de 80 caracteres
 
 "autocmd VimEnter * call s:actionForOpen()
 "function! s:actionForOpen()
