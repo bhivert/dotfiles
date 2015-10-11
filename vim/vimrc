@@ -2,8 +2,11 @@
 " == Common settings ==
 set nocompatible		" Disable vi compatibility
 set title				" Display filename in title bar
-set number				" Show line number
-set relativenumber		" Show line number
+set nu				" Show line number
+"set relativenumber		" Show line number
+autocmd InsertEnter * :set rnu		" set relativenumbre by entering in insert mode
+autocmd InsertLeave * :set nornu	" unset relativenumbre by outgoing insert mode
+
 set ruler				" Show cursor position
 set showcmd				" Show incomplete command
 syntax on				" Syntax coloration
@@ -34,9 +37,15 @@ set smartcase			" Don't ignore case when capitale is typed
 set incsearch			" Highlight typed word during typing
 set hlsearch			" Highlight typed word
 
-" == ==
+" == Faster vim ==
 set lazyredraw			" no reddraw cursorline
 set ttyfast				" fast terminal
+
+" == Misc ==
+set showmatch			" Show matching bracket
+set matchtime=10		" Show matching bracket for 1 second
+
+set colorcolumn=80
 
 " == Theme ==
 set t_Co=256
@@ -52,11 +61,11 @@ highlight CursorLineNr ctermfg=yellow ctermbg=none
 filetype off							" Required for vundle
 set rtp+=~/.vim/bundle/Vundle.vim	" Vundle setup
 call vundle#begin()						" Vundle setup
-Bundle 'gmarik/vundle.vim'
-Bundle 'Syntastic'
-Bundle 'ctrlp.vim'
-Bundle 'Lokaltog/vim-powerline'
-"Bundle 'AutoComplPop'
+Plugin 'gmarik/vundle.vim'
+Plugin 'Syntastic'
+Plugin 'ctrlp.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()						" Vundle setup
 filetype plugin indent on				" Required for vundle
 
@@ -70,9 +79,25 @@ let b:syntastic_c_cflags = '-Wall -Wextra'
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_auto_refresh_includes = 1
 let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-Wall -Wextra -std=c++11'
+let g:syntastic_cpp_compiler_options = '-I. -I.. -Iinclude -I../include -Wall -Wextra -std=c++11'
 "let g:syntastic_cpp_include_dirs = ['']
 let g:syntastic_disabled_filetypes = ['o', 'a']
+
+" let g:ycm_filepath_completion_use_working_dir = 1
+" let g:ycm_min_num_identifier_candidate_chars = 0
+" let g:ycm_semantic_triggers = {
+" 			\	'c' : ['->', '.'],
+" 			\	'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+" 			\	're!\[.*\]\s'],
+" 			\	'ocaml' : ['.', '#'],
+" 			\	'cpp,objcpp' : ['->', '.', '::'],
+" 			\	'perl' : ['->'],
+" 			\	'php' : ['->', '::'],
+" 			\	'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+" 			\	'ruby' : ['.', '::'],
+" 			\	'lua' : ['.', ':'],
+" 			\	'erlang' : [':'],
+" 			\ }
 
 " == Lokaltog customisation ==
 set laststatus=2					" Always show status line
@@ -81,32 +106,26 @@ autocmd FileType man set tabstop=8
 runtime ftplugin/man.vim
 
 " == Mapping ==
-noremap <c-x> :w<cr>
-noremap <c-c> :q<cr>
-noremap <c-e> :Exp<cr>
-noremap <silent> <C-t> :tabe.<cr>
-noremap <silent> <C-n> :tabnext<cr>
-noremap <silent> <C-p> :tabprevious<cr>
-noremap <silent> <C-h> <C-w>h
-noremap <silent> <C-l> <C-w>l
-noremap <silent> <C-k> <C-w>k
-noremap <silent> <C-j> <C-w>j
-noremap <c-b> :CtrlPBuffer<cr>
-noremap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
+nmap <c-x> :w<cr>
+nmap <c-c> :q<cr>
+nmap <c-e> :Exp<cr>
+nmap <silent> <C-t> :tabe.<cr>
+nmap <silent> <C-n> :tabnext<cr>
+nmap <silent> <C-p> :tabprevious<cr>
+nmap <silent> <C-h> <C-w>h
+nmap <silent> <C-l> <C-w>l
+nmap <silent> <C-k> <C-w>k
+nmap <silent> <C-j> <C-w>j
+nmap <c-b> :CtrlPBuffer<cr>
+nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
 
 let mapleader="\\"
-nmap <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
-nmap <silent> <leader>sv :source $HOME/.vimrc<CR>		" Source vimrc
-"nmap <silent> <leader>ev :edit $HOME/.myvimrc<CR>		" Edit myvimrc
-"nmap <silent> <leader>sv :source $HOME/.myvimrc<CR>	" Source myvimrc
-
-" == Misc ==
-set showmatch			" Show matching bracket
-set matchtime=10		" Show matching bracket for 1 second
+map <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
+map <silent> <leader>sv :source $HOME/.vimrc<CR>		" Source vimrc
+"map <silent> <leader>ev :edit $HOME/.myvimrc<CR>		" Edit myvimrc
+"map <silent> <leader>sv :source $HOME/.myvimrc<CR>	" Source myvimrc
 
 " == Norme C 42==
-set colorcolumn=80
-
 highlight normec42 ctermbg=red ctermfg=white guibg=#592929
 autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '^ ')				"espace au debut
 autocmd BufEnter *.{c,cpp,h,hpp} call matchadd ('normec42', '  \+')				"double espace
