@@ -81,18 +81,18 @@ autocmd FileType man set tabstop=8
 runtime ftplugin/man.vim
 
 " == Mapping ==
-nmap <c-x> :w<cr>
-nmap <c-c> :q<cr>
-nmap <c-e> :Exp<cr>
-nmap <silent> <C-t> :tabe.<cr>
-nmap <silent> <C-n> :tabnext<cr>
-nmap <silent> <C-p> :tabprevious<cr>
-nmap <silent> <C-h> <C-w>h
-nmap <silent> <C-l> <C-w>l
-nmap <silent> <C-k> <C-w>k
-nmap <silent> <C-j> <C-w>j
-nmap <c-b> :CtrlPBuffer<cr>
-nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
+noremap <c-x> :w<cr>
+noremap <c-c> :q<cr>
+noremap <c-e> :Exp<cr>
+noremap <silent> <C-t> :tabe.<cr>
+noremap <silent> <C-n> :tabnext<cr>
+noremap <silent> <C-p> :tabprevious<cr>
+noremap <silent> <C-h> <C-w>h
+noremap <silent> <C-l> <C-w>l
+noremap <silent> <C-k> <C-w>k
+noremap <silent> <C-j> <C-w>j
+noremap <c-b> :CtrlPBuffer<cr>
+noremap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
 
 let mapleader="\\"
 nmap <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
