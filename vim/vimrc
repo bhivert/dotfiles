@@ -44,7 +44,6 @@ set ttyfast				" fast terminal
 " == Misc ==
 set showmatch			" Show matching bracket
 set matchtime=10		" Show matching bracket for 1 second
-
 set colorcolumn=80
 
 " == Theme ==
@@ -106,24 +105,37 @@ autocmd FileType man set tabstop=8
 runtime ftplugin/man.vim
 
 " == Mapping ==
-nmap <c-x> :w<cr>
-nmap <c-c> :q<cr>
-nmap <c-e> :Exp<cr>
-nmap <silent> <C-t> :tabe.<cr>
-nmap <silent> <C-n> :tabnext<cr>
-nmap <silent> <C-p> :tabprevious<cr>
-nmap <silent> <C-h> <C-w>h
-nmap <silent> <C-l> <C-w>l
-nmap <silent> <C-k> <C-w>k
-nmap <silent> <C-j> <C-w>j
-nmap <c-b> :CtrlPBuffer<cr>
-nmap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
+"nmap <c-x> :w<cr>
+"nmap <c-c> :q<cr>
+noremap <c-e> :Exp<cr>
+noremap <silent> <C-t> :tabe.<cr>
+noremap <silent> <C-n> :tabnext<cr>
+noremap <silent> <C-p> :tabprevious<cr>
+noremap <silent> <C-h> <C-w>h
+noremap <silent> <C-l> <C-w>l
+noremap <silent> <C-k> <C-w>k
+noremap <silent> <C-j> <C-w>j
+noremap <c-b> :CtrlPBuffer<cr>
+noremap <silent> <S-k> :<C-U>exe "Man " . v:count1 . " <cword>"<CR><cr>
 
 let mapleader="\\"
 map <silent> <leader>ev :edit $HOME/.vimrc<CR>		" Edit vimrc
 map <silent> <leader>sv :source $HOME/.vimrc<CR>		" Source vimrc
 "map <silent> <leader>ev :edit $HOME/.myvimrc<CR>		" Edit myvimrc
 "map <silent> <leader>sv :source $HOME/.myvimrc<CR>	" Source myvimrc
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala	let comment_leader = '// '
+autocmd FileType sh,ruby,python		let comment_leader = '# '
+autocmd FileType conf,fstab			let comment_leader = '# '
+autocmd FileType tex				let comment_leader = '% '
+autocmd FileType mail				let comment_leader = '> '
+autocmd FileType vim				let comment_leader = '" '
+noremap <silent> <leader>cc :s/^\(.*\)$/\/\/ \1/<CR>:nohl<CR>
+noremap <silent> <leader>cu :s/^\/\/ \(.*\)$/\1/<CR>:nohl<CR>
+
+"noremap <silent> <leader>cc :s/^\(.*\)$/<C-R>=comment_leader<CR>\1/<CR>:nohl<CR>
+"noremap <silent> <leader>cu :s/^<C-R>=comment_leader<CR>\(.*\)$/\1/<CR>:nohl<CR>
 
 " == Norme C 42==
 highlight normec42 ctermbg=red ctermfg=white guibg=#592929
