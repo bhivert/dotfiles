@@ -88,7 +88,7 @@ function s:Stdheader ()
   call s:genLine (-1, "", " ", 80, "")
   let s:inBlock = s:returnGenLine
 
-  let s:line2 = "By: " . system ("id -un | tr -d '\n'") . " <marvin@42.fr>"
+  let s:line2 = "By: " . system ("id -un | tr -d '\n'") . " <" . $MAIL . ">"
   let s:line3 = "Created: " . strftime ("%Y/%m/%d %H:%M:%S") . " by " . system ("id -un | tr -d '\n'")
   let s:line4 = "Updated: " . strftime ("%Y/%m/%d %H:%M:%S") . " by " . system ("id -un | tr -d '\n'")
 
