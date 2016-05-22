@@ -44,7 +44,7 @@ set ttyfast				" fast terminal
 " == Misc ==
 set showmatch			" Show matching bracket
 set matchtime=10		" Show matching bracket for 1 second
-set colorcolumn=
+set colorcolumn=80
 
 " == Theme ==
 set t_Co=256
@@ -61,10 +61,9 @@ filetype off							" Required for vundle
 set rtp+=~/.vim/bundle/Vundle.vim	" Vundle setup
 call vundle#begin()						" Vundle setup
 Plugin 'gmarik/vundle.vim'
-Plugin 'Syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'ctrlp.vim'
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'Valloric/YouCompleteMe'
 call vundle#end()						" Vundle setup
 filetype plugin indent on				" Required for vundle
 
@@ -73,18 +72,23 @@ let g:syntastic_c_check_header = 1
 let g:syntastic_c_auto_refresh_includes = 1
 let g:syntastic_c_compiler = 'clang'
 let b:syntastic_c_cflags = '-Wall -Wextra'
-"let g:syntastic_c_include_dirs = ['']
 
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_auto_refresh_includes = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-I. -I.. -I* -I../*-Iincludes -I../includes -Iinclude -I../include -Wall -Wextra -std=c++11'
-"let g:syntastic_cpp_include_dirs = ['']
+
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_compiler = 'clang'
+let b:syntastic_c_cflags = '-Wall -Wextra'
+"let g:syntastic_c_compiler_options = '-I. -I.. -I* -I../* -Iincludes -I../includes -Iinclude -I../include'
+let g:syntastic_c_include_dirs = ['..', './includes', '../includes', './libft/includes', '../libft/includes']
+
+"let g:syntastic_cpp_check_header = 1
+"let g:syntastic_cpp_auto_refresh_includes = 1
+"let g:syntastic_cpp_compiler = 'clang++'
+"let g:syntastic_cpp_compiler_options = '-I.. -I* -I../* -Iincludes -I../includes -Iinclude -I../incl
+""let g:syntastic_cpp_include_dirs = ['']
+"let g:syntastic_disabled_filetypes = ['o', 'a']
+
 let g:syntastic_disabled_filetypes = ['o', 'a']
-
-"autocmd FileType c		let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_c_conf.py"
-"autocmd FileType cpp	let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_c++_conf.py"
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_c++_conf.py"
 
 " == Lokaltog customisation ==
 set laststatus=2					" Always show status line
@@ -172,38 +176,6 @@ autocmd BufNewFile *.{h,hpp} :3
 "set completeopt=menu,longest
 "
 "map <c-a> :call g:ClangUpdateQuickFix()<CR>
-
-"autocmd VimEnter * call s:actionForOpen()
-"function! s:actionForOpen()
-"`	let filename = expand('%:t')
-"	NERDTree
-"	!~/.Sublivim/installer.sh &
-"	if !empty(filename)
-"		wincmd l
-"	endif
-"endfunction
-
-"autocmd BufCreate * call s:addingNewTab()
-"function! s:addingNewTab()
-"	let filename = expand('%:t')
-"	if winnr('$') < 2 && exists('t:NERDTreeBufName') == 0
-"		NERDTree
-"		if !empty(filename)
-"			wincmd l
-"		endif
-"	endif
-"endfunction
-
-"autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-"function! s:CloseIfOnlyNerdTreeLeft()
-"	if exists("t:NERDTreeBufName")
-"		if bufwinnr(t:NERDTreeBufName) != -1
-"			if winnr("$") == 1
-"				q
-"			endif
-"		endif
-"	endif
-"endfunction
 
 " == Backups ==
 "if isdirectory($HOME . '/.vim/backup') == 0
