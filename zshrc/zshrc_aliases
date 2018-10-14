@@ -14,6 +14,8 @@ alias l='ls -p'
 alias ll='ls -hlp'
 alias la='ls -hlap'
 
+alias tree='tree -C'
+
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
